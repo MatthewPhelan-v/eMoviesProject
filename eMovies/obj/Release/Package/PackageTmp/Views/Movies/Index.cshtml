@@ -1,0 +1,217 @@
+﻿@model eMovies.ViewModels.MovieIndexViewModel
+@{
+    ViewBag.Title = "Listings";
+}
+
+
+    <h2>Our Listings - </h2>
+<blockquote class="blockquote text-right">
+    <p class="mb-0">"That’s funny, my name’s Roger. Two Roger’s don’t make a right."</p>
+    <footer class="blockquote-footer">Gone in 60 Seconds</footer>
+</blockquote>
+<form method="post" action="/Order">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col" class="hidden-xs">Genre</th>
+                <th scope="col" class="hidden-xs">Length</th>
+                <th scope="col">Price (£)</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ var movies = Model.Movies; }
+            @for (var i = 0; i < movies.Count; i++)
+            {
+                var m = movies[i];
+                string temp = m.formattedAmount.Replace("£", "");
+                decimal fa = temp.AsDecimal();
+
+                <tr>
+                    <th scope="row"><a class="title_anchor" id="@m.movie_id" href="#" data-toggle="modal" data-target=".bd-example-modal-lg">@m.movie_title</a> <input type="text" name="[@i].movie_title" value="@m.movie_title" hidden /></th>
+                    <td class="hidden-xs">@m.genre</td>
+                    <td class="hidden-xs">@m.length_minutes minutes</td>
+                    <td><input class="movie_price" type="text" name="[@i].price" value=@fa id="price_@m.movie_id" readonly style="border: 0; box-shadow: none; width: 65px" /></td>
+                    <td>
+                        <input type="text" name="[@i].movie_id" value=@m.movie_id hidden />
+                        <input id="quantity_@m.movie_id" type="text" name="[@i].quantity" placeholder="How many tickets?" onchange="updatePrice(@m.movie_id, this.value)" style="width:140px;" />
+                    </td>
+                    <td class="hidden-xs hidden-sm" style="width: 300px;"><a href="@m.image_url"><img src="@m.image_url" style="width: 300px;"/></a></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <div class="container-fluid">
+        <div class="row text-center">
+            Total: £<span id="total_price">0</span>
+            <div class="text-right" id="selectMovieWarning" style="color: red; padding:7px;">Please select which movies you would like to see. <br /></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <p><a class="btn btn-primary" href=@Url.Action("Index", "Home")>&laquo; Back</a></p>
+            </div>
+            <div class="col-xs-6 text-right">
+                <input class="btn btn-primary" type="submit" value="Submit" id="submitButton" disabled />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h4 class="modal-title" id="modal_title"></h4>
+                    </div>
+                    <div class="col-xs-6">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6" style="15px;">
+                            <a href="https://youtu.be/dQw4w9WgXcQ"><img class="img-thumbnail" id="modal_img" /></a>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row" style="padding: 0 15px;">
+                                <label>Description: </label>
+                                <div class="text-info" id="modal_description"></div>
+                            </div>
+                            <div class="row" style="padding: 15px;">
+                                <div class="text-body"><strong>Release Date:  </strong> <span id="modal_releaseDate"></span></div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="text-body"><strong>Genre:  </strong> <span id="modal_genre"></span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-body"><strong>Length:  </strong> <span id="modal_length"> </span> minutes</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 15px;">
+                                <div class="text-body"><strong>Price:  </strong> £<span id="modal_price"></span></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function formatDate(date) {
+        var formattedDate = new Date(date.match(/\d+/)[0] * 1);
+
+        var d = formattedDate.getDate();
+        var m =  formattedDate.getMonth();
+        m += 1;
+        var y = formattedDate.getFullYear();
+
+       return d + "-" + m + "-" + y;
+    }
+
+    $(document).ready(function () {
+        var oid = localStorage.getItem("orderId");
+        if (oid != null) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetOrder", "Order")',
+                data: { id: oid },
+                dataType: 'json',
+                success: function (success) {
+                    console.log(success);
+                    for (var i = 0; i < success.length; i++) {
+                        var mid = success[i].movie_id;
+                        var quant = success[i].quantity;
+                        updatePrice(mid, quant);
+                        var s = "#quantity_" + mid;
+                        $(s).val(quant);
+                    }
+                },
+                error: function (e, text, string) {
+                    alert(e.message + text + string);
+                    console.log(e);
+                }
+            })
+        }
+
+        $('.title_anchor').click(function (e) {
+            var modalId = e.target.id;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AJAXTest", "Movies")',
+                data: { id: modalId },
+                dataType: 'json',
+                success: function (success) {
+                    var movie = success[0];
+                    var date = formatDate(movie.release_date);
+                    var price = movie.price.toFixed(2);
+                    $("#modal_title").html(movie.movie_title);
+                    $("#modal_description").html(movie.decription);
+                    $("#modal_releaseDate").html(date);
+                    $("#modal_genre").html(movie.genre);
+                    $("#modal_length").html(movie.length_minutes);
+                    $("#modal_price").html(price);
+                    $("#modal_img").attr("src", movie.image_url);
+
+                    console.log(success);
+                },
+                error: function (e, text, string) {
+                    alert(e.message + text + string);
+                    console.log(e);
+                }
+            });
+        });
+    });
+        
+    let map = new Map()
+
+    function financial(n) {
+        return Number.parseFloat(n).toFixed(2);
+    }
+    
+    function updatePrice(id, quantity) {
+
+        let total = 0;
+        var c = document.getElementById("price_" + id).value;
+        var cost = Number(c.replace(/[^0-9.-]+/g,""));
+        var price = cost * quantity;
+
+        map.set(id, price);
+
+        for (var [key, value] of map) {
+            total = total + value;
+            //localStorage.setItem(key, value);
+            //var ar = [ quantity, cost, price ];
+            //localStorage.setItem(key, JSON.stringify(ar)); 
+        }
+
+        if (total > 0) {
+            document.getElementById("submitButton").disabled = false;
+            document.getElementById("selectMovieWarning").style.display = "none";
+        } else {
+            document.getElementById("submitButton").disabled = true;
+            document.getElementById("selectMovieWarning").style.display = "block";
+        }
+
+        total = financial(total);
+        document.getElementById("total_price").innerHTML = total;
+
+    }
+
+
+</script>

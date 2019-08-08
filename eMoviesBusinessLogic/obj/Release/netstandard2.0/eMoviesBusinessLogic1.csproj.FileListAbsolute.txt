@@ -1,0 +1,9 @@
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\bin\Release\netstandard2.0\eMoviesBusinessLogic1.deps.json
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\bin\Release\netstandard2.0\eMoviesBusinessLogic1.dll
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\bin\Release\netstandard2.0\eMoviesBusinessLogic1.pdb
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\obj\Release\netstandard2.0\eMoviesBusinessLogic1.csprojAssemblyReference.cache
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\obj\Release\netstandard2.0\eMoviesBusinessLogic1.csproj.CoreCompileInputs.cache
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\obj\Release\netstandard2.0\eMoviesBusinessLogic1.AssemblyInfoInputs.cache
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\obj\Release\netstandard2.0\eMoviesBusinessLogic1.AssemblyInfo.cs
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\obj\Release\netstandard2.0\eMoviesBusinessLogic1.dll
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesBusinessLogic\obj\Release\netstandard2.0\eMoviesBusinessLogic1.pdb

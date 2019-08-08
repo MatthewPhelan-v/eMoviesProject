@@ -1,0 +1,65 @@
+﻿@model eMovies.ViewModels.PaymentCompletionViewModel
+@{
+    ViewBag.Title = "Payment Successful :)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Payment Successful.</h3>
+<br />
+<blockquote class="blockquote text-right">
+    <p class="mb-0">"Well, Baby-O, it's not exactly mai-thais and yatzee out here but... let's do it!"</p>
+    <footer class="blockquote-footer">Con Air</footer>
+</blockquote>
+<div class="container">
+    <div class="row">
+        <h3>Heres your order reference number: @Session["OrderId"]</h3>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name: @Model.name</th>
+                    <th>Card Number: @Model.card_number</th>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ foreach (var temp in Model.movies_orders)
+                    {
+                        <tr>
+                            <td>@temp.movie_title</td>
+                            <td>@temp.quantity</td>
+                            <td>@string.Format("{0:C}",temp.price)</td>
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td><h4>Total: </h4></td>
+                    <td><h4><span id="total_price">@string.Format("{0:C}",Model.total_cost)</span></h4></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <h4>Enjoy the show!</h4>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        localStorage.clear();
+    })
+</script>
+
+
+
+
+

@@ -1,0 +1,161 @@
+﻿@model eMovies.ViewModels.OrderIndexViewModel
+@{
+    ViewBag.Title = "Order Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var selection = Model.selection.ToList();
+    var orderId = Model.orderId;
+    Session["OrderId"] = orderId;
+    double total = 0.0;
+}
+
+<h2>@ViewBag.Title</h2>
+<blockquote class="blockquote text-right">
+    <p class="mb-0">"Those who have the ability to take action have the responsibility to take action."</p>
+    <footer class="blockquote-footer"> National Treasure </footer>
+</blockquote>
+<form method="post" action="/Order/Payment">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <table class="table" style="width: 100%;">
+                    <caption>Your order: </caption>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(var i=0; i<selection.Count(); i++)
+                        {
+                            var movie = selection[i];
+                            double price = (double)movie.price;
+                            <tr id="row_@movie.movie_id">
+                                <td>@movie.movie_title</td>
+                                <td id="quantity_@movie.movie_id">@movie.quantity</td>
+                                <td class="align-middle" >@string.Format("{0:C}",price)</td>
+                                <td class="align-middle" id="price_@movie.movie_id" hidden>@price</td>
+                                <td>
+                                    <input type="text" name="movie_id" value=@movie.movie_id hidden />
+                                </td>
+                                <td><button type="button" class="btn btn-link" id=@movie.movie_id onclick="removeOrder(this.id)"><i class="glyphicon glyphicon-remove" style="color: red"></i></button></td>
+                            </tr>
+                            total = total + (movie.quantity * price);
+                            
+                        }
+                        <tr>
+                            <td><h4>Total: </h4></td>
+                            <td><h4><span id="tot_display">@string.Format("{0:C}",total)</span></h4> <span id="total_price" hidden
+                                                                                                           >@total</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Payment Details
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8">
+                                        <div class="form-group">
+                                            <label for="nameOnCard" style="width: 100%">
+                                                NAME ON CARD
+                                            </label>
+                                            <input type="text" class="form-control" id="nameOnCard" name="card_name" placeholder="Full Name" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4 pull-right">
+                                        <div class="form-group">
+                                            <label for="cardType">
+                                                TYPE OF CARD
+                                            </label>
+                                            <select class="form-control" id="cardType" name="card_type" placeholder="Card Type" required>
+                                                <option value="" disabled selected hidden>Please Choose...</option>
+                                                <option value="Visa">Visa</option>
+                                                <option value="Mastercard">Mastercard</option>
+                                                <option value="American Express">American Express</option>
+                                                <option value="Visa Debit">Visa Debit</option>
+                                                <option value="Mastercard Debit">Mastercard Debit</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardNumber">
+                                        CARD NUMBER
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="cardNumber" name="card_number" placeholder="Valid Card Number"
+                                               required autofocus />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7 col-md-7">
+                                        <div class="form-group">
+                                            <label for="expityMonth" style="width: 100%">
+                                                EXPIRY DATE
+                                            </label>
+                                            <div class="col-xs-6" style="padding: 0 5px;">
+                                                <input type="text" class="form-control" id="expiryMonth" name="expiry_month" placeholder="MM" required />
+                                            </div>
+                                            <div class="col-xs-6" style="padding: 0 5px;">
+                                                <input type="text" class="form-control" id="expiryYear" name="expiry_year" placeholder="YY" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-5 col-md-5 pull-right">
+                                        <div class="form-group">
+                                            <label for="cvCode">
+                                                CV CODE
+                                            </label>
+                                            <input type="password" class="form-control" id="cvvCode" name="cvv" placeholder="CVV" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <input type="text" name="total_price" id="tot_input" value=@total hidden />
+                                        </div>
+                                        <div class="col-xs-12" style="text-align: center">
+                                            <input type="submit" class="btn btn-default btn-lg btn-block" value="Pay" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        localStorage.setItem("orderId", @ViewBag.OrderId)
+    });
+
+    function removeOrder(id) {
+        var row = document.getElementById("row_" + id);
+        
+        var pri = document.getElementById("price_" + id).innerHTML;
+        var qua = document.getElementById("quantity_" + id).innerHTML;
+        var cos = pri * qua; 
+        var tot = document.getElementById("total_price").innerHTML;
+        var newTotal = tot - cos;
+        document.getElementById("total_price").innerHTML = newTotal;
+        document.getElementById("tot_input").value = newTotal;
+        document.getElementById("tot_display").innerHTML = Number.parseFloat(newTotal).toFixed(2);
+
+        row.parentNode.removeChild(row);
+    }
+</script>

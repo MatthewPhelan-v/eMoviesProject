@@ -1,0 +1,79 @@
+﻿@model eMovies.ViewModels.MovieDetailsViewModel
+@{
+    ViewBag.Title = "Movies Page";
+    var m = Model;
+}
+
+<h2>@m.Title</h2>
+<p>
+    <div class="row m-3">
+        <div class="col-md-4 col-sm-6">
+            Length: @m.Length minutes
+        </div>
+        <div class="col-md-4 col-sm-6">
+            Genre: @m.Genre
+        </div>
+        <div class="col-md-4 col-sm-12">
+            Release Date: @m.ReleaseDate
+        </div>
+    </div>
+</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <p>Description: </p>
+            <p>@m.Description</p>
+        </div>
+        <div class="col-md-6 hidden-xs hidden-sm text-right">
+            <img src="@m.ImgUrl" />
+        </div>
+    </div>
+    <div class="row">
+        <h4>Price: @m.Price</h4>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 text-right">
+            
+        </div>
+        <div class="col-xs-6 text-right">
+            <p><a class="btn btn-primary" href=@Url.Action("Index", "Movies")>&laquo; Back</a></p>
+        </div>
+    </div>
+        <div class="modal" id="booking_modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label>Book Movie</label>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Movie: @m.Title</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity: </label>
+                                <input type="text" placeholder="quantity" id="quantity" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" value="Close" id="close_btn" data-dismiss="modal">Close &laquo;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+<script>
+
+    function makeBooking() {
+        document.cookie = "";
+        console.log("cookie made");
+        @Url.Action("Test", "Movies");
+    }
+
+</script>
+
+

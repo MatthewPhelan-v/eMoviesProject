@@ -1,0 +1,13 @@
+﻿@model eMovies.ViewModels.RandomMovieViewModel
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Movie.Title</h2>
+@foreach (var customer in Model.Customers)
+{
+    <hr>
+        <div style="margin: 0 50px;">@customer.Name</div>
+}
+

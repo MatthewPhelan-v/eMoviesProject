@@ -1,0 +1,36 @@
+﻿@model eMovies.ViewModels.CustomerOrderViewModel
+@{
+    ViewBag.Title = "CustomerOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Orders</h2>
+
+@{var o = Model.Orders; }
+
+<table class="table table-bordered">
+
+    @if (o.Count > 0)
+    {
+        <thead>
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in o)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>£@order.Cost</td>
+                </tr>
+            }
+        </tbody>
+        } else
+        {
+        <tr>Theres Nothing Here :(</tr>
+        }
+</table>
+
+<p><a class="btn btn-default" href=@Url.Action("CustomerDetails", "Customer")>&laquo; Back</a></p>

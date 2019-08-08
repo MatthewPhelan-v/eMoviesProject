@@ -1,0 +1,69 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.jumbotron {
+    box-shadow: 0px 5px 4px #e8e5e5; 
+    background: rgb(136,221,221);
+    background: linear-gradient(180deg, rgba(136,221,221,1) 0%, rgba(236,240,241,1) 100%);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #C2C2C2;
+    box-shadow: 1px 1px 4px #EBEBEB;
+    -moz-box-shadow: 1px 1px 4px #EBEBEB;
+    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 7px;
+    outline: none;
+}
+
+blockquote {
+    box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    outline: none;
+}
+
+img {
+    border-radius: 3px;
+}
+
+@media only screen and (max-width: 992px) {
+    .indexCol {
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .infoP {
+        height: 110px;
+    }
+}

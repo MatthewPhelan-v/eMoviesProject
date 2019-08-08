@@ -1,0 +1,2 @@
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesTests\obj\Debug\eMoviesTests.csprojAssemblyReference.cache
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesTests\obj\Debug\eMoviesTests.csproj.CoreCompileInputs.cache

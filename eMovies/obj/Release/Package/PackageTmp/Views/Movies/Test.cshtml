@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test</h2>
+
+<span id="test"></span>
+
+<script>
+
+    document.getElementById("test").innerHTML = document.cookie;
+
+</script>

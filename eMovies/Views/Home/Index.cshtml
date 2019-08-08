@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    .btn {
+        width: 215px;
+    }
+</style>
+<div class="jumbotron">
+    <div class="text-center">
+        <img class="align-items-center" src="~/Content/img/IndexPage.png" />
+    </div>
+    <hr style="color:#2c3e50"/>
+    <div class="container text-center">
+        <p class="lead text-center">
+            The global home of highly over-priced cinema tickets.<br />
+            <i>We have the smallest popcorn and stickiest Pepsi.</i>
+        </p>
+        <br />
+        <p><a class="btn btn-primary btn-lg" href=@Url.Action("Index", "Movies")>Come take a look &raquo;</a></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 indexCol">
+        <h2>Movies</h2>
+        <p class="infoP">
+            Are you looking for the hottest new releases? Well you're in the wrong place! However, if you want to watch Nicolas cages shouting "NOT THE BEES", then boy do we have a treat for you.
+        </p>
+        <p><a class="btn btn-default" href="~/Movies">Papa's got a brand new bag &raquo;</a></p>
+    </div>
+    <div class="col-md-4 indexCol">
+        <h2>Customer Portal</h2>
+        <p class="infoP">Your chance to keep track of your orders, the nic cage films you have seen and what parts of the "cage-verse" your yet the feast your eyes on. Also where you will find special cage promotions and offers.</p>
+        <p><a class="btn btn-default" href="~/Customer/SignIn">Tool up, hunny bunny &raquo;</a></p>
+    </div>
+    <div class="col-md-4 indexCol">
+        <h2>Complaints</h2>
+        <p class="infoP">Because lets face it some of you are going to have something to say. Please be kind to our staff.</p>
+        <p><a class="btn btn-default" href="~/Home/Contact">Release the baby &raquo;</a></p>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<blockquote class="blockquote text-right">
+    <p class="mb-0">"To begin... To begin... How to start? I'm hungry. I should get coffee. Coffee would help me think. Maybe I should write something first, then reward myself with coffee. Coffee and a muffin. Okay, so I need to establish the themes. Maybe a banana-nut. That's a good muffin."</p>
+    <footer class="blockquote-footer"> Adaptation </footer>
+</blockquote>
+
+

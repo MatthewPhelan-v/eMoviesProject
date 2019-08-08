@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="emoviesModelStoreContainer" CdmEntityContainer="emoviesEntities1">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="emoviesModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="number" ColumnName="number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movie_Orders">
+      <EntityTypeMapping TypeName="emoviesModel.Movie_Orders">
+        <MappingFragment StoreEntitySet="Movie_Orders">
+          <ScalarProperty Name="movieorder_id" ColumnName="movieorder_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movies">
+      <EntityTypeMapping TypeName="emoviesModel.Movy">
+        <MappingFragment StoreEntitySet="Movies">
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+          <ScalarProperty Name="movie_title" ColumnName="movie_title" />
+          <ScalarProperty Name="length_minutes" ColumnName="length_minutes" />
+          <ScalarProperty Name="release_date" ColumnName="release_date" />
+          <ScalarProperty Name="genre" ColumnName="genre" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="emoviesModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="order_date" ColumnName="order_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Showings">
+      <EntityTypeMapping TypeName="emoviesModel.Showing">
+        <MappingFragment StoreEntitySet="Showings">
+          <ScalarProperty Name="showing_id" ColumnName="showing_id" />
+          <ScalarProperty Name="showing_date" ColumnName="showing_date" />
+          <ScalarProperty Name="screen" ColumnName="screen" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

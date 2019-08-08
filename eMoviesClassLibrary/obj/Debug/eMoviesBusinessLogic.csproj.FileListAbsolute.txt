@@ -1,0 +1,14 @@
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\eMoviesClassLibrary.dll.config
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\eMoviesClassLibrary.dll
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\eMoviesClassLibrary.pdb
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\EntityFramework.dll
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\StructureMap.dll
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\EntityFramework.xml
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\bin\Debug\StructureMap.xml
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\obj\Debug\eMoviesBusinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\obj\Debug\eMoviesBusinessLogic.csproj.CopyComplete
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\obj\Debug\eMoviesClassLibrary.dll
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\obj\Debug\eMoviesClassLibrary.pdb
+C:\Users\Matthew.Phelan\source\repos\eMovies\eMoviesClassLibrary\obj\Debug\eMoviesBusinessLogic.csprojAssemblyReference.cache

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="emoviesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="Int32" Nullable="false" />
+    <Property Name="first_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="last_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="age" Type="Byte" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="number" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__customer__4316F928" FromRole="Customers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Movie_Orders">
+    <Key>
+      <PropertyRef Name="movieorder_id" />
+    </Key>
+    <Property Name="movieorder_id" Type="Int32" Nullable="false" />
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="movie_id" Type="Int32" Nullable="false" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Movy" Relationship="Self.FK__Movie_Ord__movie__48CFD27E" FromRole="Movie_Orders" ToRole="Movies" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__Movie_Ord__order__47DBAE45" FromRole="Movie_Orders" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Movy">
+    <Key>
+      <PropertyRef Name="movie_id" />
+    </Key>
+    <Property Name="movie_id" Type="Int32" Nullable="false" />
+    <Property Name="movie_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="length_minutes" Type="Int16" Nullable="false" />
+    <Property Name="release_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="genre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="price" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Movie_Orders" Relationship="Self.FK__Movie_Ord__movie__48CFD27E" FromRole="Movies" ToRole="Movie_Orders" />
+    <NavigationProperty Name="Showings" Relationship="Self.FK__Showings__movie___4BAC3F29" FromRole="Movies" ToRole="Showings" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="customer_id" Type="Int32" Nullable="false" />
+    <Property Name="cost" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+    <Property Name="order_date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Orders__customer__4316F928" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="Movie_Orders" Relationship="Self.FK__Movie_Ord__order__47DBAE45" FromRole="Orders" ToRole="Movie_Orders" />
+  </EntityType>
+  <EntityType Name="Showing">
+    <Key>
+      <PropertyRef Name="showing_id" />
+    </Key>
+    <Property Name="showing_id" Type="Int32" Nullable="false" />
+    <Property Name="showing_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="screen" Type="Int32" Nullable="false" />
+    <Property Name="movie_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Movy" Relationship="Self.FK__Showings__movie___4BAC3F29" FromRole="Showings" ToRole="Movies" />
+  </EntityType>
+  <Association Name="FK__Orders__customer__4316F928">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Movie_Ord__movie__48CFD27E">
+    <End Role="Movies" Type="Self.Movy" Multiplicity="1" />
+    <End Role="Movie_Orders" Type="Self.Movie_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="movie_id" />
+      </Principal>
+      <Dependent Role="Movie_Orders">
+        <PropertyRef Name="movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Movie_Ord__order__47DBAE45">
+    <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+    <End Role="Movie_Orders" Type="Self.Movie_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="Movie_Orders">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Showings__movie___4BAC3F29">
+    <End Role="Movies" Type="Self.Movy" Multiplicity="1" />
+    <End Role="Showings" Type="Self.Showing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="movie_id" />
+      </Principal>
+      <Dependent Role="Showings">
+        <PropertyRef Name="movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="emoviesEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Movie_Orders" EntityType="Self.Movie_Orders" />
+    <EntitySet Name="Movies" EntityType="Self.Movy" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Showings" EntityType="Self.Showing" />
+    <AssociationSet Name="FK__Orders__customer__4316F928" Association="Self.FK__Orders__customer__4316F928">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Movie_Ord__movie__48CFD27E" Association="Self.FK__Movie_Ord__movie__48CFD27E">
+      <End Role="Movies" EntitySet="Movies" />
+      <End Role="Movie_Orders" EntitySet="Movie_Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Movie_Ord__order__47DBAE45" Association="Self.FK__Movie_Ord__order__47DBAE45">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Movie_Orders" EntitySet="Movie_Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Showings__movie___4BAC3F29" Association="Self.FK__Showings__movie___4BAC3F29">
+      <End Role="Movies" EntitySet="Movies" />
+      <End Role="Showings" EntitySet="Showings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

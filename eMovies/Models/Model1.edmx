@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="emoviesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CardDetails">
+          <Key>
+            <PropertyRef Name="card_number" />
+          </Key>
+          <Property Name="card_number" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="exp_month" Type="tinyint" Nullable="false" />
+          <Property Name="exp_year" Type="tinyint" Nullable="false" />
+          <Property Name="cvv" Type="nchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="25" />
+          <Property Name="age" Type="tinyint" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="number" Type="varchar" MaxLength="25" />
+          <Property Name="customer_password" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Movie_Orders">
+          <Key>
+            <PropertyRef Name="movieorder_id" />
+          </Key>
+          <Property Name="movieorder_id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="movie_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="booked" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="movie_id" />
+          </Key>
+          <Property Name="movie_id" Type="int" Nullable="false" />
+          <Property Name="movie_title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="length_minutes" Type="smallint" Nullable="false" />
+          <Property Name="release_date" Type="smalldatetime" Nullable="false" />
+          <Property Name="genre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="smallmoney" Nullable="false" />
+          <Property Name="image_url" Type="varchar" MaxLength="250" />
+          <Property Name="decription" Type="nchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="cost" Type="smallmoney" Nullable="false" />
+          <Property Name="order_date" Type="smalldatetime" Nullable="false" />
+          <Property Name="card_number" Type="varchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Showings">
+          <Key>
+            <PropertyRef Name="showing_id" />
+          </Key>
+          <Property Name="showing_id" Type="int" Nullable="false" />
+          <Property Name="showing_date" Type="smalldatetime" Nullable="false" />
+          <Property Name="screen" Type="int" Nullable="false" />
+          <Property Name="movie_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Orders__customer__5070F446">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Showings__movie___59063A47">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
+          <End Role="Showings" Type="Self.Showings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="movie_id" />
+            </Principal>
+            <Dependent Role="Showings">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CardDetails_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="CardDetails" Type="Self.CardDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="CardDetails">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="emoviesModelStoreContainer">
+          <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie_Orders" EntityType="Self.Movie_Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Showings" EntityType="Self.Showings" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Orders__customer__5070F446" Association="Self.FK__Orders__customer__5070F446">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Showings__movie___59063A47" Association="Self.FK__Showings__movie___59063A47">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Showings" EntitySet="Showings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CardDetails_Customers" Association="Self.FK_CardDetails_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="CardDetails" EntitySet="CardDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="emoviesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CardDetail">
+          <Key>
+            <PropertyRef Name="card_number" />
+          </Key>
+          <Property Name="card_number" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <Property Name="exp_month" Type="Byte" Nullable="false" />
+          <Property Name="exp_year" Type="Byte" Nullable="false" />
+          <Property Name="cvv" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CardDetails_Customers" FromRole="CardDetails" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="age" Type="Byte" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="customer_password" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="CardDetails" Relationship="Self.FK_CardDetails_Customers" FromRole="Customers" ToRole="CardDetails" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__customer__5070F446" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Movie_Orders">
+          <Key>
+            <PropertyRef Name="movieorder_id" />
+          </Key>
+          <Property Name="movieorder_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="movie_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="booked" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movy">
+          <Key>
+            <PropertyRef Name="movie_id" />
+          </Key>
+          <Property Name="movie_id" Type="Int32" Nullable="false" />
+          <Property Name="movie_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="length_minutes" Type="Int16" Nullable="false" />
+          <Property Name="release_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="genre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="image_url" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="decription" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Showings" Relationship="Self.FK__Showings__movie___59063A47" FromRole="Movies" ToRole="Showings" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="order_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="card_number" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Orders__customer__5070F446" FromRole="Orders" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Showing">
+          <Key>
+            <PropertyRef Name="showing_id" />
+          </Key>
+          <Property Name="showing_id" Type="Int32" Nullable="false" />
+          <Property Name="showing_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="screen" Type="Int32" Nullable="false" />
+          <Property Name="movie_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Movy" Relationship="Self.FK__Showings__movie___59063A47" FromRole="Showings" ToRole="Movies" />
+        </EntityType>
+        <Association Name="FK_CardDetails_Customers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CardDetails" Type="Self.CardDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="CardDetails">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__customer__5070F446">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Showings__movie___59063A47">
+          <End Role="Movies" Type="Self.Movy" Multiplicity="1" />
+          <End Role="Showings" Type="Self.Showing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="movie_id" />
+            </Principal>
+            <Dependent Role="Showings">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="emoviesEntities5" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CardDetails" EntityType="Self.CardDetail" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Movie_Orders" EntityType="Self.Movie_Orders" />
+          <EntitySet Name="Movies" EntityType="Self.Movy" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Showings" EntityType="Self.Showing" />
+          <AssociationSet Name="FK_CardDetails_Customers" Association="Self.FK_CardDetails_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="CardDetails" EntitySet="CardDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__customer__5070F446" Association="Self.FK__Orders__customer__5070F446">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Showings__movie___59063A47" Association="Self.FK__Showings__movie___59063A47">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Showings" EntitySet="Showings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="emoviesModelStoreContainer" CdmEntityContainer="emoviesEntities5">
+          <EntitySetMapping Name="CardDetails">
+            <EntityTypeMapping TypeName="emoviesModel.CardDetail">
+              <MappingFragment StoreEntitySet="CardDetails">
+                <ScalarProperty Name="card_number" ColumnName="card_number" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="exp_month" ColumnName="exp_month" />
+                <ScalarProperty Name="exp_year" ColumnName="exp_year" />
+                <ScalarProperty Name="cvv" ColumnName="cvv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="emoviesModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="customer_password" ColumnName="customer_password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movie_Orders">
+            <EntityTypeMapping TypeName="emoviesModel.Movie_Orders">
+              <MappingFragment StoreEntitySet="Movie_Orders">
+                <ScalarProperty Name="movieorder_id" ColumnName="movieorder_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="booked" ColumnName="booked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="emoviesModel.Movy">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+                <ScalarProperty Name="movie_title" ColumnName="movie_title" />
+                <ScalarProperty Name="length_minutes" ColumnName="length_minutes" />
+                <ScalarProperty Name="release_date" ColumnName="release_date" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="decription" ColumnName="decription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="emoviesModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="card_number" ColumnName="card_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Showings">
+            <EntityTypeMapping TypeName="emoviesModel.Showing">
+              <MappingFragment StoreEntitySet="Showings">
+                <ScalarProperty Name="showing_id" ColumnName="showing_id" />
+                <ScalarProperty Name="showing_date" ColumnName="showing_date" />
+                <ScalarProperty Name="screen" ColumnName="screen" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

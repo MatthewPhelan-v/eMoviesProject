@@ -1,0 +1,47 @@
+﻿@model eMovies.ViewModels.CustomerDetailsViewModel
+@{
+    var c = Model;
+    ViewBag.Title = "CustomerDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10">
+                <h2>@Model.first_name @Model.last_name</h2>
+            </div>
+            <div class="col-xs-2">
+                <i class="fa fa-cog text-center"></i>
+            </div>
+        </div>
+    </div>
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th scope="row">ID</th>
+                <td>@c.customer_id</td>
+            </tr>
+            <tr>
+                <th scope="row">Name</th>
+                <td>@c.first_name @c.last_name</td>
+            </tr>
+            <tr>
+                <th scope="row">Age</th>
+                <td>@c.age</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>@c.email</td>
+            </tr>
+        </tbody>
+    </table>
+} else
+{
+    <h2>Whoops! Somethings gone wrong :(</h2>
+}
+
+
+<p><a class="btn btn-default" href=@Url.Action("CustomerOrders", "Customer")>Orders &raquo;</a></p>
+<p><a class="btn btn-default" href=@Url.Action("Index", "Home")>&laquo; Back</a></p>
